@@ -14,6 +14,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
         type="text"
         placeholder="Search cryptocurrencies..."
         onChange={(e) => onSearch(e.target.value)}
+        className="lg:w-[400px]"
       />
       <Button size="icon">
         <Search className="h-4 w-4" />
