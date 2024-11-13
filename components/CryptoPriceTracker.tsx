@@ -26,9 +26,11 @@ interface CryptoData {
 
 const CryptoPriceTracker = () => {
   const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
+  const [filteredData, setFilteredData] = useState<CryptoData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filteredData, setFilteredData] = useState<CryptoData[]>([]);
+  const [selectedCrypto, setSelectedCrypto] = useState<CryptoData | null>(null);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   const fetchCryptoData = useCallback(async () => {
     setIsLoading(true);
@@ -68,6 +70,20 @@ const CryptoPriceTracker = () => {
     [cryptoData]
   );
 
+  const handleSelect = useCallback(
+    (id: string) => {
+      const selected = cryptoData.find((crypto) => crypto.id === id);
+      setSelectedCrypto(selected || null);
+    },
+    [cryptoData]
+  );
+
+  const handleToggleFavorite = useCallback((id: string) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((fav) => fav !== id) : [...prev, id]
+    );
+  }, []);
+
   return (
     <div className="container mx-auto p-4">
       <Header />
@@ -83,9 +99,24 @@ const CryptoPriceTracker = () => {
         <LoadingSpinner />
       ) : (
         <>
-          <CryptoList cryptoData={filteredData} />
-          <CryptoDetails />
-          <FavoritesList />
+          <CryptoList
+            cryptoData={filteredData}
+            onSelect={handleSelect}
+            favorites={favorites}
+            onToggleFavorite={handleToggleFavorite}
+          />
+          {selectedCrypto && (
+            <CryptoDetails
+              crypto={selectedCrypto}
+              onClose={() => setSelectedCrypto(null)}
+            />
+          )}
+          <FavoritesList
+            favorites={favorites}
+            cryptoData={cryptoData}
+            onSelect={handleSelect}
+            onToggleFavorite={handleToggleFavorite}
+          />
         </>
       )}
     </div>
