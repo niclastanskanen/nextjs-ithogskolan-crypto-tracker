@@ -31,6 +31,7 @@ const CryptoPriceTracker = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedCrypto, setSelectedCrypto] = useState<CryptoData | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const fetchCryptoData = useCallback(async () => {
     setIsLoading(true);
@@ -74,6 +75,7 @@ const CryptoPriceTracker = () => {
     (id: string) => {
       const selected = cryptoData.find((crypto) => crypto.id === id);
       setSelectedCrypto(selected || null);
+      setIsDrawerOpen(true);
     },
     [cryptoData]
   );
@@ -84,10 +86,14 @@ const CryptoPriceTracker = () => {
     );
   }, []);
 
+  const handleCloseDrawer = useCallback(() => {
+    setIsDrawerOpen(false);
+  }, []);
+
   return (
     <div className="container mx-auto p-4">
       <Header />
-      <div className="flex justify-between items-center my-4">
+      <div className="flex justify-between items-center my-4 gap-4">
         <SearchBar onSearch={handleSearch} />
         <Button onClick={fetchCryptoData} disabled={isLoading}>
           <RefreshCw className="mr-2 h-4 w-4" />
@@ -105,12 +111,11 @@ const CryptoPriceTracker = () => {
             favorites={favorites}
             onToggleFavorite={handleToggleFavorite}
           />
-          {selectedCrypto && (
-            <CryptoDetails
-              crypto={selectedCrypto}
-              onClose={() => setSelectedCrypto(null)}
-            />
-          )}
+          <CryptoDetails
+            crypto={selectedCrypto}
+            onClose={handleCloseDrawer}
+            isOpen={isDrawerOpen}
+          />
           <FavoritesList
             favorites={favorites}
             cryptoData={cryptoData}
