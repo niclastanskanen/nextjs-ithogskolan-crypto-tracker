@@ -11,9 +11,17 @@ import { CryptoData } from "@/types/cryptoData";
 
 interface CryptoListProps {
   cryptoData: CryptoData[];
+  onSelect: (id: string) => void;
+  favorites: string[];
+  onToggleFavorite: (id: string) => void;
 }
 
-const CryptoList = ({ cryptoData }: CryptoListProps) => {
+const CryptoList = ({
+  cryptoData,
+  onSelect,
+  favorites,
+  onToggleFavorite,
+}: CryptoListProps) => {
   return (
     <Table>
       <TableHeader>
@@ -27,7 +35,13 @@ const CryptoList = ({ cryptoData }: CryptoListProps) => {
       </TableHeader>
       <TableBody>
         {cryptoData.map((crypto) => (
-          <CryptoItem key={crypto.id} crypto={crypto} />
+          <CryptoItem
+            key={crypto.id}
+            crypto={crypto}
+            onSelect={onSelect}
+            isFavorite={favorites.includes(crypto.id)}
+            onToggleFavorite={onToggleFavorite}
+          />
         ))}
       </TableBody>
     </Table>
