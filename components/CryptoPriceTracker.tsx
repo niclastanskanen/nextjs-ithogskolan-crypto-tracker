@@ -1,14 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { RefreshCw } from "lucide-react";
+import axios from "axios";
 
 import CryptoDetails from "./CryptoDetails";
 import CryptoList from "./CryptoList";
 import FavoritesList from "./FavoritesList";
 import Header from "./Header";
 import SearchBar from "./SearchBar";
-import axios from "axios";
 import LoadingSpinner from "./LoadingSpinner";
+import ErrorBoundary from "./ErrorBoundary";
+
+import { Button } from "@/components/ui/button";
 
 interface CryptoData {
   id: string;
@@ -36,7 +40,6 @@ const CryptoPriceTracker = () => {
       });
       if (response.data && Array.isArray(response.data.data)) {
         setCryptoData(response.data.data);
-        console.log(response.data.data);
       } else {
         throw new Error("Invalid data received from the API");
       }
@@ -54,7 +57,14 @@ const CryptoPriceTracker = () => {
   return (
     <div className="container mx-auto p-4">
       <Header />
-      <SearchBar />
+      <div className="flex justify-between items-center my-4">
+        <SearchBar />
+        <Button onClick={fetchCryptoData} disabled={isLoading}>
+          <RefreshCw className="mr-2 h-4 w-4" />
+          Refresh
+        </Button>
+      </div>
+      <ErrorBoundary error={error} />
       {isLoading ? (
         <LoadingSpinner />
       ) : (
