@@ -1,9 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
 interface CryptoData {
   id: string;

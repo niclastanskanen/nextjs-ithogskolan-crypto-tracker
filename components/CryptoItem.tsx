@@ -1,8 +1,9 @@
 import { Star } from "lucide-react";
 
+import { CryptoData } from "@/types/cryptoData";
+
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { CryptoData } from "@/types/cryptoData";
 
 interface CryptoItemProps {
   crypto: CryptoData;

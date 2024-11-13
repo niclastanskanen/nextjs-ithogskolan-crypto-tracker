@@ -1,4 +1,5 @@
 import CryptoItem from "./CryptoItem";
+import { CryptoData } from "@/types/cryptoData";
 
 import {
   Table,
@@ -7,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CryptoData } from "@/types/cryptoData";
 
 interface CryptoListProps {
   cryptoData: CryptoData[];
