@@ -7,8 +7,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { CryptoData } from "@/types/cryptoData";
 
-const CryptoList = () => {
+interface CryptoListProps {
+  cryptoData: CryptoData[];
+}
+
+const CryptoList = ({ cryptoData }: CryptoListProps) => {
   return (
     <Table>
       <TableHeader>
@@ -21,7 +26,9 @@ const CryptoList = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <CryptoItem />
+        {cryptoData.map((crypto) => (
+          <CryptoItem key={crypto.id} crypto={crypto} />
+        ))}
       </TableBody>
     </Table>
   );
