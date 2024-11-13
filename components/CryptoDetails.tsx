@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import PriceChart from "./PriceChart";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -110,8 +112,7 @@ const CryptoDetails = ({ crypto, onClose }: CryptoDetailsProps) => {
           </div>
         </div>
         <h3 className="text-lg font-semibold mb-2">7-Day Price Chart</h3>
-        {/* TODO: pricechart here */}
-        PriceChart
+        <PriceChart data={historicalData} />
       </CardContent>
     </Card>
   );
