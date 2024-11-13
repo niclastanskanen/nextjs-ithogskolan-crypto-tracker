@@ -6,18 +6,30 @@ import { CryptoData } from "@/types/cryptoData";
 
 interface CryptoItemProps {
   crypto: CryptoData;
+  onSelect: (id: string) => void;
+  isFavorite: boolean;
+  onToggleFavorite: (id: string) => void;
 }
 
 const CryptoItem = ({
   crypto: { id, name, symbol, priceUsd, changePercent24Hr },
+  onSelect,
+  isFavorite,
+  onToggleFavorite,
 }: CryptoItemProps) => {
   return (
     <TableRow>
       <TableCell className="font-medium">
         <div className="flex items-center">
           <span className="mr-2">{name}</span>
-          <Button size="icon" variant="ghost">
-            <Star className="h-4 w-4" />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onToggleFavorite(id)}
+          >
+            <Star
+              className={`h-4 w-4 ${isFavorite ? "fill-yellow-400" : ""}`}
+            />
           </Button>
         </div>
       </TableCell>
@@ -35,7 +47,9 @@ const CryptoItem = ({
         {parseFloat(changePercent24Hr || "0").toFixed(2)}%
       </TableCell>
       <TableCell className="text-right">
-        <Button variant="link">Details</Button>
+        <Button variant="link" onClick={() => onSelect(id)}>
+          Details
+        </Button>
       </TableCell>
     </TableRow>
   );
