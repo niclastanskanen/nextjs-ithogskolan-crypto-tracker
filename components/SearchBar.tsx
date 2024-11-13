@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 
 const SearchBar = () => {
   return (
-    <div className="flex items-center space-x-2 mb-4">
+    <div className="flex items-center space-x-2">
       <Input type="text" placeholder="Search cryptocurrencies..." />
       <Button size="icon">
         <Search className="h-4 w-4" />
