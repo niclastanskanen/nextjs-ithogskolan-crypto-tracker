@@ -28,6 +28,7 @@ const CryptoPriceTracker = () => {
   const [cryptoData, setCryptoData] = useState<CryptoData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [filteredData, setFilteredData] = useState<CryptoData[]>([]);
 
   const fetchCryptoData = useCallback(async () => {
     setIsLoading(true);
@@ -40,6 +41,7 @@ const CryptoPriceTracker = () => {
       });
       if (response.data && Array.isArray(response.data.data)) {
         setCryptoData(response.data.data);
+        setFilteredData(response.data.data);
       } else {
         throw new Error("Invalid data received from the API");
       }
@@ -54,11 +56,23 @@ const CryptoPriceTracker = () => {
     fetchCryptoData();
   }, [fetchCryptoData]);
 
+  const handleSearch = useCallback(
+    (query: string) => {
+      const filtered = cryptoData.filter(
+        (crypto) =>
+          crypto.name.toLowerCase().includes(query.toLowerCase()) ||
+          crypto.symbol.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredData(filtered);
+    },
+    [cryptoData]
+  );
+
   return (
     <div className="container mx-auto p-4">
       <Header />
       <div className="flex justify-between items-center my-4">
-        <SearchBar />
+        <SearchBar onSearch={handleSearch} />
         <Button onClick={fetchCryptoData} disabled={isLoading}>
           <RefreshCw className="mr-2 h-4 w-4" />
           Refresh
@@ -69,7 +83,7 @@ const CryptoPriceTracker = () => {
         <LoadingSpinner />
       ) : (
         <>
-          <CryptoList cryptoData={cryptoData} />
+          <CryptoList cryptoData={filteredData} />
           <CryptoDetails />
           <FavoritesList />
         </>
