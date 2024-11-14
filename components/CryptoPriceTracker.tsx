@@ -105,6 +105,12 @@ const CryptoPriceTracker = () => {
         <LoadingSpinner />
       ) : (
         <>
+          <FavoritesList
+            favorites={favorites}
+            cryptoData={cryptoData}
+            onSelect={handleSelect}
+            onToggleFavorite={handleToggleFavorite}
+          />
           <CryptoList
             cryptoData={filteredData}
             onSelect={handleSelect}
@@ -115,12 +121,6 @@ const CryptoPriceTracker = () => {
             crypto={selectedCrypto}
             onClose={handleCloseDrawer}
             isOpen={isDrawerOpen}
-          />
-          <FavoritesList
-            favorites={favorites}
-            cryptoData={cryptoData}
-            onSelect={handleSelect}
-            onToggleFavorite={handleToggleFavorite}
           />
         </>
       )}
