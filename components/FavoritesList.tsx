@@ -16,14 +16,13 @@ import { Button } from "@/components/ui/button";
 interface FavoritesListProps {
   favorites: string[];
   cryptoData: CryptoData[];
-  onSelect: (id: string) => void;
+
   onToggleFavorite: (id: string) => void;
 }
 
 const FavoritesList = ({
   favorites,
   cryptoData,
-  onSelect,
   onToggleFavorite,
 }: FavoritesListProps) => {
   const favoriteCryptos = cryptoData.filter((crypto) =>
