@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import PriceChart from "./PriceChart";
+import CurrencyConverter from "./CurrencyConverter";
 
 import {
   Drawer,
@@ -122,6 +123,12 @@ const CryptoDetails = ({ crypto, onClose, isOpen }: CryptoDetailsProps) => {
                     { maximumFractionDigits: 0 }
                   )}
                 </p>
+              </div>
+              <div>
+                <CurrencyConverter
+                  cryptoName={crypto.name}
+                  cryptoPrice={parseFloat(crypto.priceUsd)}
+                />
               </div>
             </div>
           </div>
