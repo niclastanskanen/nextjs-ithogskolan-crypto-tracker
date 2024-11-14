@@ -106,9 +106,8 @@ const CryptoPriceTracker = () => {
       ) : (
         <>
           <FavoritesList
-            favorites={favorites}
             cryptoData={cryptoData}
-            onSelect={handleSelect}
+            favorites={favorites}
             onToggleFavorite={handleToggleFavorite}
           />
           <CryptoList
